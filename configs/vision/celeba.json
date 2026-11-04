@@ -1,0 +1,12 @@
+{
+  "dataset_url": null,
+  "targets": null,
+  "sample_size": null,
+  "seed": 42,
+  "resize": null,
+  "extractor": null,
+  "classifier": null,
+  "data_dir": "data",
+  "features_dir": "features",
+  "results_dir": "results"
+}

@@ -25,3 +25,15 @@
   - 2353219 -> Write Docs; EDA Labels (BBOX, EVAL)
 - Next meeting: 2026-10-03
 - Dataset link: [https://www.kaggle.com/datasets/jessicali9530/celeba-dataset](https://www.kaggle.com/datasets/jessicali9530/celeba-dataset)
+
+## 2026-11-03 (week-11) - 21:00, Google Meet
+- Attendance: Not recorded.
+- Review of last week: EDA modules and demo exist. Blank pipeline modules are added. Training and results remain unfinished.
+- Decisions:
+  - D-03: Use Jupyter notebooks as entry points. Defer notebook creation.
+  - D-04: Agree on target attributes, experiment settings, and feature format before implementation.
+- Task split for the coming week:
+  - 2353219 -> Extract features from two pretrained extractors with image IDs, labels, and splits.
+  - 2352551 -> Implement two classifiers, a majority baseline, validation.
+  - 2352470 -> Approve settings and feature format. Review modules, split handling, and initial results. validation, tuning and plotting.
+- Next meeting: To be confirmed.
