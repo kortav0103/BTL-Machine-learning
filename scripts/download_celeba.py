@@ -53,8 +53,8 @@ def download(data_dir: Path) -> None:
         for shard in tqdm(shards, desc=f"Writing {split}"):
             table = pq.read_table(shard).to_pandas()
             attributes = [c for c in table.columns if c not in NON_ATTRIBUTE_COLUMNS]
-            for row in table.itertuples(index=False):
-                record = row._asdict()
+            # to_dict keeps names like "5_o_Clock_Shadow" that itertuples would rename.
+            for record in table.to_dict("records"):
                 image = record["image"]
                 suffix = Path(image.get("path") or "x.png").suffix or ".png"
                 image_id = f"{next_id:06d}{suffix}"

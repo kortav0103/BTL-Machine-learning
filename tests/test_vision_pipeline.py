@@ -142,3 +142,37 @@ def test_run_pipeline_reuses_feature_cache(config, monkeypatch):
 
     monkeypatch.setattr(extraction, "extract_features", _fail)
     run_pipeline(config)
+
+
+def test_download_celeba_converts_parquet(tmp_path, monkeypatch):
+    import io
+    import sys
+
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    sys.path.insert(0, "scripts")
+    import download_celeba
+
+    shard_dir = tmp_path / "hf" / download_celeba.SUBSET
+    shard_dir.mkdir(parents=True)
+    buffer = io.BytesIO()
+    Image.new("RGB", (178, 218)).save(buffer, "PNG")
+    image = {"bytes": buffer.getvalue(), "path": "x.png"}
+    for split, n in (("train", 4), ("valid", 2), ("test", 2)):
+        frame = pd.DataFrame(
+            {"image": [image] * n, "celeb_id": range(n), "5_o_Clock_Shadow": [True, False] * (n // 2),
+             "Smiling": [False, True] * (n // 2)}
+        )
+        pq.write_table(pa.Table.from_pandas(frame), shard_dir / f"{split}-00000-of-00001.parquet")
+    monkeypatch.setattr(download_celeba, "snapshot_download", lambda *a, **k: str(tmp_path / "hf"))
+
+    data_dir = tmp_path / "data"
+    download_celeba.download(data_dir)
+
+    attrs = pd.read_csv(data_dir / "list_attr_celeba.csv")
+    assert list(attrs.columns) == ["image_id", "5_o_Clock_Shadow", "Smiling"]
+    assert attrs["5_o_Clock_Shadow"].tolist()[:2] == [1, -1]
+    assert pd.read_csv(data_dir / "list_eval_partition.csv")["partition"].tolist() == [0, 0, 0, 0, 1, 1, 2, 2]
+    manifest = prepare_data({"targets": ["Smiling"], "data_dir": str(data_dir)})
+    assert len(manifest) == 8
