@@ -1,0 +1,20 @@
+| target | extractor | classifier | val_f1 | test_accuracy | test_balanced_accuracy | test_precision | test_recall | test_f1 | test_roc_auc |
+|---|---|---|---|---|---|---|---|---|---|
+| Eyeglasses | mobilenet_v3_large | linear_svc | 0.8285 | 0.9792 | 0.8465 | 0.9611 | 0.6948 | 0.8065 | 0.9774 |
+| Eyeglasses | mobilenet_v3_large | logistic_regression | 0.8167 | 0.9775 | 0.8455 | 0.9251 | 0.6948 | 0.7936 | 0.9778 |
+| Eyeglasses | mobilenet_v3_large | majority | 0.0 | 0.9378 | 0.5 | 0.0 | 0.0 | 0.0 | 0.5 |
+| Eyeglasses | resnet18 | linear_svc | 0.7617 | 0.9728 | 0.8261 | 0.8723 | 0.6586 | 0.7506 | 0.9607 |
+| Eyeglasses | resnet18 | logistic_regression | 0.7692 | 0.9738 | 0.8173 | 0.9138 | 0.6386 | 0.7518 | 0.9639 |
+| Eyeglasses | resnet18 | majority | 0.0 | 0.9378 | 0.5 | 0.0 | 0.0 | 0.0 | 0.5 |
+| Male | mobilenet_v3_large | linear_svc | 0.9329 | 0.937 | 0.9361 | 0.9052 | 0.9325 | 0.9187 | 0.9844 |
+| Male | mobilenet_v3_large | logistic_regression | 0.9318 | 0.9328 | 0.9318 | 0.899 | 0.9279 | 0.9133 | 0.9835 |
+| Male | mobilenet_v3_large | majority | 0.0 | 0.6185 | 0.5 | 0.0 | 0.0 | 0.0 | 0.5 |
+| Male | resnet18 | linear_svc | 0.924 | 0.9238 | 0.923 | 0.8847 | 0.9201 | 0.902 | 0.9762 |
+| Male | resnet18 | logistic_regression | 0.9218 | 0.9222 | 0.9212 | 0.8838 | 0.9168 | 0.9 | 0.9763 |
+| Male | resnet18 | majority | 0.0 | 0.6185 | 0.5 | 0.0 | 0.0 | 0.0 | 0.5 |
+| Smiling | mobilenet_v3_large | linear_svc | 0.7951 | 0.798 | 0.798 | 0.7965 | 0.7941 | 0.7953 | 0.8785 |
+| Smiling | mobilenet_v3_large | logistic_regression | 0.7959 | 0.7985 | 0.7985 | 0.7962 | 0.7962 | 0.7962 | 0.8781 |
+| Smiling | mobilenet_v3_large | majority | 0.0 | 0.5058 | 0.5 | 0.0 | 0.0 | 0.0 | 0.5 |
+| Smiling | resnet18 | linear_svc | 0.7798 | 0.7748 | 0.7746 | 0.7802 | 0.7577 | 0.7688 | 0.8573 |
+| Smiling | resnet18 | logistic_regression | 0.7794 | 0.7752 | 0.7751 | 0.7799 | 0.7597 | 0.7697 | 0.8571 |
+| Smiling | resnet18 | majority | 0.0 | 0.5058 | 0.5 | 0.0 | 0.0 | 0.0 | 0.5 |

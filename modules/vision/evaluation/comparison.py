@@ -13,6 +13,7 @@ from modules.vision.plotting.style import apply_style, save_figure, sequential_c
 
 RUN_FILE = "run.json"
 SHORT_NAMES = {"majority": "Majority", "logistic_regression": "LogReg", "linear_svc": "LinSVM"}
+SHORT_EXTRACTORS = {"resnet18": "ResNet18", "resnet50": "ResNet50", "mobilenet_v3_large": "MobileNetV3"}
 METRICS = ("accuracy", "balanced_accuracy", "precision", "recall", "f1", "roc_auc")
 
 
@@ -107,13 +108,21 @@ def render_figures(results_dir: str | Path, output_dir: str | Path | None = None
         written += save_figure(fig, output_dir / f"comparison_{metric}", apply_style("bar"))
         plt.close(fig)
     runs = [
-        (f"{r.target.replace('_', ' ')}\n{r.extractor} + {r.classifier.replace('_', ' ')}",
+        (f"{r.target.replace('_', ' ')}\n{SHORT_EXTRACTORS.get(r.extractor, r.extractor)} + "
+         f"{SHORT_NAMES.get(r.classifier, r.classifier)}",
          pd.read_csv(results_dir / r.target / r.extractor / r.classifier / "predictions.csv"))
         for r in best_runs(table).itertuples()
     ]
     fig = plot_confusion_matrices(runs)
     written += save_figure(fig, output_dir / "confusion_best", apply_style("heatmap"))
     plt.close(fig)
+
+    from modules.vision.evaluation.gallery import GALLERY_DIR, INDEX_FILE, plot_gallery
+
+    for index in sorted((results_dir / GALLERY_DIR).glob(f"*/{INDEX_FILE}")):
+        fig = plot_gallery(index.parent)
+        written += save_figure(fig, output_dir / f"gallery_{index.parent.name}", apply_style("heatmap"))
+        plt.close(fig)
     return written
 
 

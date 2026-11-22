@@ -11,7 +11,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 
 from modules.vision.models.classification import build_classifier
-from modules.vision.training.classification import train_classifier
+from modules.vision.training.classification import _DEFAULT_C_GRID, train_classifier
 
 
 def _make_mock_dataset(
@@ -91,7 +91,7 @@ def test_train_classifier_runs_end_to_end_and_beats_baseline(classifier_name):
     assert result["model"] is not None
     assert 0.0 <= result["best_score"] <= 1.0
     if classifier_name in ("logistic_regression", "linear_svc"):
-        assert len(result["trials"]) == 3
+        assert len(result["trials"]) == len(_DEFAULT_C_GRID)
         assert result["best_score"] > 0.5
 
 

@@ -54,6 +54,16 @@ uv run python -m modules.vision.plot results   # re-render figures locally in Co
 
 The branch must be pushed first, since the instance clones it from GitHub.
 
+## Inference
+
+Each run saves its fitted classifier as `model.joblib` (scaler + linear model, a few KB),
+so predictions on new aligned face crops need no retraining. The backbone's ImageNet
+weights download from torchvision on first use and are cached in `~/.cache/torch`.
+
+```bash
+uv run python -m modules.vision.predict results/Smiling/mobilenet_v3_large/logistic_regression face1.jpg face2.png
+```
+
 ## Figures
 
 Figures use the lab manuscript style from `configs/styles/` (`bar.toml`, `heatmap.toml`,
@@ -88,11 +98,15 @@ python -m pytest tests -q
 results/
   manifest.csv                     sampled images, splits and 0/1 labels
   comparison.csv / comparison.md   one row per (target, extractor, classifier)
-  figures/                         comparison_test_f1, comparison_test_roc_auc, confusion_best (.pdf/.svg/.png)
+  figures/                         comparison_test_f1, comparison_test_roc_auc, confusion_best,
+                                   gallery_<target> (.pdf/.svg/.png)
+  gallery/<target>/                thumbnails + gallery.csv: TP/TN and the most confident FP/FN
+                                   test faces of the best run, so the gallery re-renders without data/
   <target>/<extractor>/<classifier>/
     run.json                       chosen params, validation trials, val + test metrics
     metrics.json                   test metrics and confusion matrix
     predictions.csv                per-image test predictions and scores
+    model.joblib                   fitted classifier for modules.vision.predict
 reports/eda/                       EDA summaries, figures and integrity checks (run_eda)
 ```
 
@@ -112,7 +126,9 @@ modules/vision/
   evaluation/comparison.py  comparison table and plots across runs
   plotting/style.py         lab figure style
   run.py                    end-to-end runner
+  evaluation/gallery.py     prediction gallery export and plot
   plot.py                   re-render figures from a results folder
+  predict.py                inference on new images with a saved run
 scripts/
   download_celeba.py        CelebA from the Hugging Face mirror into data/
   vast_run.sh               remote entry point used by launch.toml

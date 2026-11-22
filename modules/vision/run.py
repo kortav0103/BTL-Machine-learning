@@ -2,7 +2,7 @@
 
 Pipeline: prepare manifest -> extract features per backbone (cached) ->
 train each classifier per target with validation selection -> evaluate on test ->
-compare all runs.
+save the fitted classifier -> export a prediction gallery -> compare all runs.
 
 Usage::
 
@@ -17,6 +17,7 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
+import joblib
 import numpy as np
 import pandas as pd
 
@@ -24,8 +25,12 @@ from modules.vision.config import load_config
 from modules.vision.data.celeba import prepare_data
 from modules.vision.evaluation.classification import evaluate_classifier
 from modules.vision.evaluation.comparison import compare_results
+from modules.vision.evaluation.gallery import export_gallery
 from modules.vision.features.storage import load_features, save_features
 from modules.vision.training.classification import train_classifier
+
+
+MODEL_FILE = "model.joblib"
 
 
 def _as_list(value: Any, name: str) -> list[str]:
@@ -68,6 +73,7 @@ def run_experiment(
 
     trained = train_classifier(features, manifest, run_cfg)
     evaluated = evaluate_classifier(trained["model"], features, manifest, run_cfg)
+    joblib.dump(trained["model"], run_dir / MODEL_FILE)  # scaler + classifier, a few KB
 
     summary = {
         "target": target,
@@ -113,6 +119,8 @@ def run_pipeline(config: Mapping[str, Any] | str | Path, overwrite_features: boo
                     f"val_f1={summary['val_metrics']['f1']:.4f} test_f1={summary['test_metrics']['f1']:.4f}"
                 )
 
+    export_gallery(results_dir, manifest)
+    print(f"[gallery] wrote {results_dir / 'gallery'}")
     table = compare_results(results_dir, results_dir)
     print(f"[compare] wrote {results_dir / 'comparison.csv'}")
     return table

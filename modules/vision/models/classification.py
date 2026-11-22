@@ -84,7 +84,7 @@ def build_classifier(config: Mapping[str, Any] | str) -> Pipeline:
             **p,
         ),
         "linear_svc": lambda p: LinearSVC(
-            max_iter=p.pop("max_iter", 2000),
+            max_iter=p.pop("max_iter", 10000),
             random_state=p.pop("random_state", seed),
             **p,
         ),

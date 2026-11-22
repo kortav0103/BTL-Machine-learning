@@ -37,7 +37,7 @@ _SPLIT_ALIASES = {
     "test": "test",
 }
 
-_DEFAULT_C_GRID = (0.1, 1.0, 10.0)
+_DEFAULT_C_GRID = (0.0001, 0.001, 0.01, 0.1, 1.0, 10.0)
 _SUPPORTED_METRICS = ("f1", "accuracy", "precision", "recall", "roc_auc")
 
 
@@ -200,7 +200,7 @@ def train_classifier(
     Only ``train`` rows are used to fit models and only ``validation`` rows are
     used for hyperparameter selection; ``test`` rows are never accessed.
     When ``param_grid`` is omitted for ``logistic_regression`` or ``linear_svc``
-    (and ``C`` is not fixed), a default grid ``C in (0.1, 1.0, 10.0)`` is tuned.
+    (and ``C`` is not fixed), a default grid ``C in (1e-4, ..., 10)`` is tuned.
     """
     if not isinstance(manifest, pd.DataFrame) or manifest.empty:
         raise ValueError("manifest must be a non-empty pandas DataFrame.")

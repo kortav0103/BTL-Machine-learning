@@ -176,3 +176,33 @@ def test_download_celeba_converts_parquet(tmp_path, monkeypatch):
     assert pd.read_csv(data_dir / "list_eval_partition.csv")["partition"].tolist() == [0, 0, 0, 0, 1, 1, 2, 2]
     manifest = prepare_data({"targets": ["Smiling"], "data_dir": str(data_dir)})
     assert len(manifest) == 8
+
+
+def test_run_saves_weights_gallery_and_supports_inference(config, tmp_path):
+    from modules.vision.evaluation.gallery import OUTCOMES, select_examples
+    from modules.vision.predict import predict_images
+
+    run_pipeline(config)
+    results = tmp_path / "results"
+    run_dir = results / "Smiling" / "tiny" / "logistic_regression"
+    assert (run_dir / "model.joblib").is_file()
+
+    index = pd.read_csv(results / "gallery" / "Smiling" / "gallery.csv")
+    assert set(index["outcome"]) <= set(OUTCOMES)
+    assert all((results / "gallery" / "Smiling" / t).is_file() for t in index["thumbnail"])
+    assert (results / "figures" / "gallery_Smiling.png").is_file()
+
+    images = sorted((tmp_path / "data" / "img_align_celeba" / "img_align_celeba").glob("*.jpg"))[:4]
+    table = predict_images(run_dir, images, device="cpu", resize=32)
+    assert table["Smiling"].tolist() == [1, 0, 1, 0]  # even-numbered fakes are bright (smiling)
+
+
+def test_select_examples_takes_most_confident_errors():
+    from modules.vision.evaluation.gallery import select_examples
+
+    preds = pd.DataFrame(
+        {"image_id": list("abcdef"), "y_true": [0, 0, 0, 1, 1, 1], "y_pred": [1, 1, 0, 0, 0, 1],
+         "score": [0.6, 0.9, 0.1, 0.4, 0.05, 0.8]}
+    )
+    picked = select_examples(preds, n_per_outcome=1)
+    assert picked.set_index("outcome")["image_id"].to_dict() == {"TP": "f", "TN": "c", "FP": "b", "FN": "e"}
