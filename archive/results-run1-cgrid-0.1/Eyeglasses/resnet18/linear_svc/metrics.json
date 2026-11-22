@@ -1,0 +1,19 @@
+{
+  "target": "Eyeglasses",
+  "test_size": 4000,
+  "test_metrics": {
+    "accuracy": 0.9745,
+    "balanced_accuracy": 0.8439238157642567,
+    "precision": 0.8693467336683417,
+    "recall": 0.6947791164658634,
+    "f1": 0.7723214285714286,
+    "roc_auc": 0.9592429970481766,
+    "positive_rate": 0.06225,
+    "confusion_matrix": {
+      "tn": 3725,
+      "fp": 26,
+      "fn": 76,
+      "tp": 173
+    }
+  }
+}

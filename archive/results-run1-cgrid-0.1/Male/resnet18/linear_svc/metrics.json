@@ -1,0 +1,19 @@
+{
+  "target": "Male",
+  "test_size": 4000,
+  "test_metrics": {
+    "accuracy": 0.92375,
+    "balanced_accuracy": 0.9229160199230583,
+    "precision": 0.885173501577287,
+    "recall": 0.919397116644823,
+    "f1": 0.9019607843137255,
+    "roc_auc": 0.975936369964538,
+    "positive_rate": 0.3815,
+    "confusion_matrix": {
+      "tn": 2292,
+      "fp": 182,
+      "fn": 123,
+      "tp": 1403
+    }
+  }
+}

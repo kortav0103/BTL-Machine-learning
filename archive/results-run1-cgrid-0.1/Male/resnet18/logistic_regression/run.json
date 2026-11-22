@@ -1,0 +1,75 @@
+{
+  "target": "Male",
+  "extractor": "resnet18",
+  "classifier": "logistic_regression",
+  "selection_metric": "f1",
+  "best_params": {
+    "C": 10.0
+  },
+  "val_metrics": {
+    "accuracy": 0.93375,
+    "precision": 0.921301775147929,
+    "recall": 0.9218472468916519,
+    "f1": 0.9215744303048239,
+    "roc_auc": 0.9830691067689499
+  },
+  "test_metrics": {
+    "accuracy": 0.923,
+    "balanced_accuracy": 0.9221841622070053,
+    "precision": 0.8839848675914249,
+    "recall": 0.9187418086500655,
+    "f1": 0.9010282776349614,
+    "roc_auc": 0.9755960018265982,
+    "positive_rate": 0.3815,
+    "confusion_matrix": {
+      "tn": 2290,
+      "fp": 184,
+      "fn": 124,
+      "tp": 1402
+    }
+  },
+  "trials": [
+    {
+      "params": {
+        "C": 0.1
+      },
+      "val_metrics": {
+        "accuracy": 0.93325,
+        "precision": 0.9202127659574468,
+        "recall": 0.9218472468916519,
+        "f1": 0.9210292812777284,
+        "roc_auc": 0.9833263264040311
+      }
+    },
+    {
+      "params": {
+        "C": 1.0
+      },
+      "val_metrics": {
+        "accuracy": 0.9335,
+        "precision": 0.9207569485511532,
+        "recall": 0.9218472468916519,
+        "f1": 0.921301775147929,
+        "roc_auc": 0.9830929328905261
+      }
+    },
+    {
+      "params": {
+        "C": 10.0
+      },
+      "val_metrics": {
+        "accuracy": 0.93375,
+        "precision": 0.921301775147929,
+        "recall": 0.9218472468916519,
+        "f1": 0.9215744303048239,
+        "roc_auc": 0.9830691067689499
+      }
+    }
+  ],
+  "sizes": {
+    "train": 20000,
+    "validation": 4000,
+    "test": 4000
+  },
+  "seed": 42
+}
