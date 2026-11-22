@@ -1,3 +1,19 @@
+# Data and large outputs
 /data/
-__pycache__
+/features/
+/logs/
+
+# Python
+__pycache__/
+*.py[cod]
 .venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Licensed font (copy locally, see README)
+/configs/styles/*.ttf
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

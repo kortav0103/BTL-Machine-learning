@@ -1,0 +1,76 @@
+# Study theme adapted from AndreyChurkin/BeautifulFigures (MIT).
+# https://github.com/AndreyChurkin/BeautifulFigures
+# Loaded by modules/vision/plotting/style.py for manuscript heatmaps.
+
+[figure]
+# Inches at final placement; replace widths with the venue's exact measures.
+one_column_width = 3.4
+two_column_width = 7.1
+height = 2.8
+export_formats = ["pdf", "svg", "png"]
+export_dpi = 400
+# Disable tight bounding-box cropping to preserve the specified dimensions.
+bbox_inches = "standard"
+facecolor = "white"
+
+[typography]
+family = "Courier New"
+base_size = 8
+axis_label_size = 8
+title_size = 9
+tick_label_size = 7
+colorbar_label_size = 8
+colorbar_tick_size = 7
+
+[colormap]
+# Nonnegative magnitude: light to dark; not a diverging scale.
+colors = ["#f5f8f8", "#77b5b6", "#6a408d"]
+normalization = "linear"
+vmin = 0
+vmax = "data_max_across_panels"
+shared_across_panels = true
+
+[cells]
+aspect = "equal"
+# Equal-size cells represent sampled conditions, not numeric axis distances.
+spacing = "categorical"
+edgecolor = "white"
+edge_alpha = 0.65
+edge_linewidth = 0.45
+rasterized = false
+
+[axes]
+full_frame = true
+linewidth = 0.6
+tick_direction = "out"
+tick_width = 0.5
+tick_length = 2
+grid = false
+x_tick_rotation = 45
+x_tick_alignment = "right"
+# Shared Y labels appear only on the first panel.
+y_tick_labels = "first_panel"
+
+[colorbar]
+shared = true
+location = "right"
+orientation = "vertical"
+outline_linewidth = 0.5
+tick_width = 0.5
+tick_length = 2
+# Set the metric label in the plot; keep protocol details in its caption.
+
+[layout]
+# Current three-panel study, not a universal layout for every panel count.
+left = 0.085
+right = 0.91
+bottom = 0.23
+top = 0.84
+wspace = 0.20
+width_ratios = [1, 1, 1, 0.055]
+
+[infeasible_cells]
+# Hatch only structurally infeasible configurations, never missing valid results.
+hatch = "///"
+edgecolor = "0.65"
+facecolor = "0.97"

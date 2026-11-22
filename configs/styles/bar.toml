@@ -1,0 +1,39 @@
+# Bar theme adapted from detachable-representation cfg/styles/bar.toml.
+[figure]
+one_column_width = 3.4
+two_column_width = 7.1
+height = 3.1
+export_formats = ["pdf", "svg", "png"]
+export_dpi = 400
+facecolor = "white"
+
+[typography]
+family = "Courier New"
+base_size = 8
+axis_label_size = 8
+title_size = 9
+tick_label_size = 7
+value_label_size = 7
+
+# Colours from the lab palette, keyed by feature extractor.
+[palette]
+resnet18 = "#77b5b6"
+mobilenet_v3_large = "#d0aa58"
+resnet50 = "#9671bd"
+other = "#7e7e7e"
+
+[axes]
+full_frame = false
+linewidth = 0.6
+tick_direction = "out"
+tick_width = 0.5
+left_spine_zorder = 5
+
+[bar]
+height = 0.62
+zorder = 3
+value_label_offset = 0.012
+
+[bar.grid]
+color = "#dddddd"
+linewidth = 0.5

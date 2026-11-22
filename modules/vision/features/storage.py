@@ -10,18 +10,9 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from modules.vision.config import load_config
 
-def _load_config(config: dict[str, Any] | str | Path) -> dict[str, Any]:
-    """Parse configuration from dict or JSON file path."""
-    if isinstance(config, (str, Path)):
-        config_path = Path(config)
-        if not config_path.is_file():
-            raise FileNotFoundError(f"Config file not found: {config_path}")
-        with open(config_path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    if isinstance(config, dict):
-        return dict(config)
-    raise TypeError(f"Expected config to be a dict or Path, got {type(config).__name__}")
+
 
 
 def save_features(
@@ -54,7 +45,7 @@ def save_features(
             f"but manifest has {len(manifest)} rows."
         )
 
-    cfg = _load_config(config)
+    cfg = load_config(config)
     extractor = str(cfg.get("extractor", "features"))
 
     # Extract aligned metadata

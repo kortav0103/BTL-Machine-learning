@@ -1,0 +1,29 @@
+# vast-run tasks for this repo. No tokens belong in this file.
+#   vast-run tasks
+#   vast-run run celeba --dry-run
+#   vast-run run celeba
+# Results come back into results/; re-render figures locally with
+#   uv run python -m modules.vision.plot results
+[repo]
+name = "BTL-Machine-learning"
+git_url = "https://github.com/kortav0103/BTL-Machine-learning.git"
+ref = "feat/runner"
+
+[resources]
+max_hourly = 0.15
+disk = 50 # 12 GB parquet download + ~12 GB extracted images + features
+min_vram = 8
+min_cpu = 8
+min_download = 1000 # Mbps, advertised host download speed
+min_disk_bw = 500 # MB/s
+min_pcie_bw = 8 # GB/s
+min_reliability = 0.98
+# gpu = "RTX_3060" # Optional; otherwise choose from all matching offers.
+image = "pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel"
+
+# Download CelebA, extract features for both backbones, train, evaluate, compare.
+[tasks.celeba]
+download_checkpoints = false
+output_dirs = []
+timeout_seconds = 0
+command = ["bash", "scripts/vast_run.sh", "configs/vision/celeba.json"]
