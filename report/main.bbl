@@ -1,0 +1,67 @@
+\begin{thebibliography}{1}
+
+\bibitem{deng2009imagenet}
+Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li~Fei-Fei.
+\newblock {ImageNet}: A large-scale hierarchical image database.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition (CVPR)}, pages 248--255, 2009.
+
+\bibitem{fan2008liblinear}
+Rong-En Fan, Kai-Wei Chang, Cho-Jui Hsieh, Xiang-Rui Wang, and Chih-Jen Lin.
+\newblock {LIBLINEAR}: A library for large linear classification.
+\newblock {\em Journal of Machine Learning Research}, 9:1871--1874, 2008.
+
+\bibitem{celeba_hf_mirror}
+{Flower Labs}.
+\newblock {flwrlabs/celeba}: {Hugging Face} dataset mirror of {CelebA}.
+\newblock Hugging Face Datasets,
+  \url{https://huggingface.co/datasets/flwrlabs/celeba}.
+\newblock Accessed: 2026.
+
+\bibitem{he2016resnet}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition (CVPR)}, pages 770--778, 2016.
+
+\bibitem{howard2019mobilenetv3}
+Andrew Howard, Mark Sandler, Grace Chu, Liang-Chieh Chen, Bo~Chen, Mingxing
+  Tan, Weijun Wang, Yukun Zhu, Ruoming Pang, Vijay Vasudevan, Quoc~V. Le, and
+  Hartwig Adam.
+\newblock Searching for {MobileNetV3}.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision (ICCV)}, pages 1314--1324, 2019.
+
+\bibitem{celeba_kaggle}
+Jessica Li.
+\newblock {CelebFaces Attributes (CelebA) Dataset}.
+\newblock Kaggle,
+  \url{https://www.kaggle.com/datasets/jessicali9530/celeba-dataset}.
+\newblock Accessed: 2026.
+
+\bibitem{liu2015celeba}
+Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang.
+\newblock Deep learning face attributes in the wild.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision (ICCV)}, pages 3730--3738, 2015.
+
+\bibitem{paszke2019pytorch}
+Adam Paszke, Sam Gross, Francisco Massa, Adam Lerer, James Bradbury, Gregory
+  Chanan, Trevor Killeen, Zeming Lin, Natalia Gimelshein, Luca Antiga, Alban
+  Desmaison, Andreas K{\"o}pf, Edward Yang, Zachary DeVito, Martin Raison,
+  Alykhan Tejani, Sasank Chilamkurthy, Benoit Steiner, Lu~Fang, Junjie Bai, and
+  Soumith Chintala.
+\newblock {PyTorch}: An imperative style, high-performance deep learning
+  library.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  volume~32, pages 8024--8035, 2019.
+
+\bibitem{pedregosa2011scikit}
+Fabian Pedregosa, Ga{\"e}l Varoquaux, Alexandre Gramfort, Vincent Michel,
+  Bertrand Thirion, Olivier Grisel, Mathieu Blondel, Peter Prettenhofer, Ron
+  Weiss, Vincent Dubourg, Jake Vanderplas, Alexandre Passos, David Cournapeau,
+  Matthieu Brucher, Matthieu Perrot, and {\'E}douard Duchesnay.
+\newblock Scikit-learn: Machine learning in {Python}.
+\newblock {\em Journal of Machine Learning Research}, 12:2825--2830, 2011.
+
+\end{thebibliography}
