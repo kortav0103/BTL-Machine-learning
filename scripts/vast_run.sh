@@ -5,7 +5,7 @@
 set -euo pipefail
 
 config=${1:-configs/vision/celeba.json}
-reference=${2:-results/run2-cgrid-wide/manifest.csv}
+reference=${2:-results/manifest.csv}
 run_id="celeba-$(date -u +%Y%m%dT%H%M%SZ)-$(git rev-parse --short HEAD)-$$"
 output="results/$run_id"
 

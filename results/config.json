@@ -1,0 +1,33 @@
+{
+  "dataset_url": "https://www.kaggle.com/datasets/jessicali9530/celeba-dataset",
+  "targets": [
+    "Smiling",
+    "Male",
+    "Eyeglasses"
+  ],
+  "sample_size": {
+    "train": 20000,
+    "validation": 4000,
+    "test": 4000
+  },
+  "seed": 42,
+  "resize": 224,
+  "extractors": [
+    "resnet18",
+    "mobilenet_v3_large"
+  ],
+  "classifiers": [
+    "majority",
+    "logistic_regression",
+    "linear_svc"
+  ],
+  "selection_metric": "f1",
+  "batch_size": 64,
+  "num_workers": 8,
+  "device": "cuda",
+  "data_dir": "data",
+  "features_dir": "features",
+  "results_dir": "results/celeba-20261127T081914Z-0bb3bc0-609",
+  "export_bundle": true,
+  "reference_manifest": "results/run2-cgrid-wide/manifest.csv"
+}

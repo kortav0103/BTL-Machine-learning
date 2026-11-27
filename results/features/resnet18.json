@@ -1,0 +1,9 @@
+{
+  "extractor": "resnet18",
+  "rows": 28000,
+  "dimensions": 512,
+  "dtype": "float32",
+  "file_bytes": 57344128,
+  "extraction_seconds": 14.061866891919635,
+  "row_metadata": "../manifest.csv"
+}

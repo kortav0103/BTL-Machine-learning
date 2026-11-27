@@ -17,3 +17,5 @@ __pycache__/
 .DS_Store
 .vscode/
 .idea/
+launch.toml
+/results/features/mobilenet_v3_large.npy

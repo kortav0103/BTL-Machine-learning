@@ -1,0 +1,9 @@
+{
+  "extractor": "mobilenet_v3_large",
+  "rows": 28000,
+  "dimensions": 960,
+  "dtype": "float32",
+  "file_bytes": 107520128,
+  "extraction_seconds": 13.114566599950194,
+  "row_metadata": "../manifest.csv"
+}
