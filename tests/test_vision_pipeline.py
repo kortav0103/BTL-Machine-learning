@@ -206,3 +206,42 @@ def test_select_examples_takes_most_confident_errors():
     )
     picked = select_examples(preds, n_per_outcome=1)
     assert picked.set_index("outcome")["image_id"].to_dict() == {"TP": "f", "TN": "c", "FP": "b", "FN": "e"}
+
+
+def test_export_bundle_preserves_split_alignment_and_gallery_crops(config, tmp_path):
+    manifest = prepare_data(config)
+    reference_path = tmp_path / "reference.csv"
+    manifest.to_csv(reference_path, index=False)
+    bundle_cfg = {
+        **config,
+        "export_bundle": True,
+        "reference_manifest": str(reference_path),
+        "extractors": ["tiny", "tiny_alt"],
+        "classifiers": ["majority", "logistic_regression", "linear_svc"],
+    }
+
+    assert len(run_pipeline(bundle_cfg)) == 12
+    results = tmp_path / "results"
+    for extractor in bundle_cfg["extractors"]:
+        features = np.load(results / "features" / f"{extractor}.npy", allow_pickle=False)
+        stored = load_features(tmp_path / "features" / f"{extractor}_celeba.npz")
+        np.testing.assert_array_equal(features, stored["features"])
+    assert (results / "eda" / "image_distributions.png").is_file()
+    assert pd.read_csv(results / "eda" / "class_counts.csv")[["negative", "positive"]].sum().sum() == 108
+
+    for run in results.glob("*/*/*/run.json"):
+        validation = pd.read_csv(run.with_name("validation_predictions.csv"))
+        predictions = pd.read_csv(run.with_name("predictions.csv"))
+        assert validation["image_id"].tolist() == manifest.loc[manifest["partition"] == 1, "image_id"].tolist()
+        assert predictions["image_id"].tolist() == manifest.loc[manifest["partition"] == 2, "image_id"].tolist()
+        assert run.with_name("model.joblib").is_file()
+    crops = results / "comparison_crops" / "Smiling"
+    index = pd.read_csv(crops / "gallery.csv")
+    assert not index.empty
+    assert index.groupby("image_id").size().eq(4).all()
+    for image_id in index["image_id"].unique():
+        original = manifest.set_index("image_id").loc[image_id, "image_path"]
+        assert (crops / image_id).read_bytes() == (tmp_path / original).read_bytes()
+
+    with pytest.raises(FileExistsError, match="fresh results directory"):
+        run_pipeline(bundle_cfg)

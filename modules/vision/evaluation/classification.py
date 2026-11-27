@@ -56,6 +56,31 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, scores: np.ndarray |
     }
 
 
+def score_split(
+    model: Any,
+    features: Any,
+    manifest: pd.DataFrame,
+    config: Mapping[str, Any],
+    split: str,
+) -> pd.DataFrame:
+    """Return ordered image IDs, labels, predictions and scores for one split."""
+    mask = _resolve_split_series(manifest, config).eq(split).to_numpy()
+    if not mask.any():
+        raise ValueError(f"The {split!r} split contains no samples.")
+    target = _resolve_target_column(manifest, config)
+    x = _as_feature_matrix(features, expected_rows=len(manifest))[mask]
+    rows = manifest.loc[mask]
+    scores = _scores(model, x)
+    return pd.DataFrame(
+        {
+            "image_id": rows["image_id"].to_numpy(),
+            "y_true": _normalize_binary_labels(rows[target], target),
+            "y_pred": np.asarray(model.predict(x), dtype=int),
+            "score": scores if scores is not None else np.nan,
+        }
+    )
+
+
 def evaluate_classifier(
     model: Any,
     features: Any,
@@ -72,28 +97,15 @@ def evaluate_classifier(
     dict
         ``metrics`` (test metrics), ``test_size`` and ``predictions`` (DataFrame).
     """
-    x_all = _as_feature_matrix(features, expected_rows=len(manifest))
-    splits = _resolve_split_series(manifest, config)
     target = _resolve_target_column(manifest, config)
-
-    test_mask = splits.eq("test").to_numpy()
-    if not test_mask.any():
-        raise ValueError("The 'test' split contains no samples.")
-
-    x_test = x_all[test_mask]
-    y_test = _normalize_binary_labels(manifest.loc[test_mask, target], target)
-    y_pred = np.asarray(model.predict(x_test)).astype(int)
-    scores = _scores(model, x_test)
-    metrics = compute_metrics(y_test, y_pred, scores)
-
-    predictions = pd.DataFrame(
-        {
-            "image_id": manifest.loc[test_mask, "image_id"].to_numpy(),
-            "y_true": y_test,
-            "y_pred": y_pred,
-            "score": scores if scores is not None else np.nan,
-        }
+    predictions = score_split(model, features, manifest, config, "test")
+    scores = predictions["score"]
+    metrics = compute_metrics(
+        predictions["y_true"].to_numpy(),
+        predictions["y_pred"].to_numpy(),
+        None if scores.isna().all() else scores.to_numpy(),
     )
+    test_size = len(predictions)
 
     run_dir = config.get("run_dir")
     if run_dir is not None:
@@ -101,6 +113,6 @@ def evaluate_classifier(
         run_dir.mkdir(parents=True, exist_ok=True)
         predictions.to_csv(run_dir / "predictions.csv", index=False)
         with open(run_dir / "metrics.json", "w", encoding="utf-8") as f:
-            json.dump({"target": target, "test_size": int(test_mask.sum()), "test_metrics": metrics}, f, indent=2)
+            json.dump({"target": target, "test_size": test_size, "test_metrics": metrics}, f, indent=2)
 
-    return {"metrics": metrics, "test_size": int(test_mask.sum()), "predictions": predictions}
+    return {"metrics": metrics, "test_size": test_size, "predictions": predictions}

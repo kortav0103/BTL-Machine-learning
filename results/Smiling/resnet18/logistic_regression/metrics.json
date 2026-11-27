@@ -1,0 +1,19 @@
+{
+  "target": "Smiling",
+  "test_size": 4000,
+  "test_metrics": {
+    "accuracy": 0.77525,
+    "balanced_accuracy": 0.7750736284873674,
+    "precision": 0.7798546209761164,
+    "recall": 0.7597369752149722,
+    "f1": 0.7696643607481425,
+    "roc_auc": 0.8571031018852242,
+    "positive_rate": 0.49425,
+    "confusion_matrix": {
+      "tn": 1599,
+      "fp": 424,
+      "fn": 475,
+      "tp": 1502
+    }
+  }
+}
