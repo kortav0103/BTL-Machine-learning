@@ -1,0 +1,111 @@
+{
+  "target": "Male",
+  "extractor": "mobilenet_v3_large",
+  "classifier": "linear_svc",
+  "selection_metric": "f1",
+  "best_params": {
+    "C": 0.001
+  },
+  "val_metrics": {
+    "accuracy": 0.9435,
+    "precision": 0.9351576442593694,
+    "recall": 0.9307282415630551,
+    "f1": 0.9329376854599406,
+    "roc_auc": 0.9883026552803424
+  },
+  "test_metrics": {
+    "accuracy": 0.937,
+    "balanced_accuracy": 0.9361384612287581,
+    "precision": 0.9052162849872774,
+    "recall": 0.9325032765399738,
+    "f1": 0.9186571981923822,
+    "roc_auc": 0.9843610773538906,
+    "positive_rate": 0.3815,
+    "confusion_matrix": {
+      "tn": 2325,
+      "fp": 149,
+      "fn": 103,
+      "tp": 1423
+    }
+  },
+  "trials": [
+    {
+      "params": {
+        "C": 0.0001
+      },
+      "val_metrics": {
+        "accuracy": 0.94275,
+        "precision": 0.9279015240328253,
+        "recall": 0.9372409709887507,
+        "f1": 0.9325478645066274,
+        "roc_auc": 0.9882942008501058
+      }
+    },
+    {
+      "params": {
+        "C": 0.001
+      },
+      "val_metrics": {
+        "accuracy": 0.9435,
+        "precision": 0.9351576442593694,
+        "recall": 0.9307282415630551,
+        "f1": 0.9329376854599406,
+        "roc_auc": 0.9883026552803424
+      }
+    },
+    {
+      "params": {
+        "C": 0.01
+      },
+      "val_metrics": {
+        "accuracy": 0.94175,
+        "precision": 0.9354066985645934,
+        "recall": 0.92599171107164,
+        "f1": 0.9306753942279083,
+        "roc_auc": 0.986682479013158
+      }
+    },
+    {
+      "params": {
+        "C": 0.1
+      },
+      "val_metrics": {
+        "accuracy": 0.94025,
+        "precision": 0.9336124401913876,
+        "recall": 0.9242155121373594,
+        "f1": 0.9288902112466528,
+        "roc_auc": 0.9861180817461422
+      }
+    },
+    {
+      "params": {
+        "C": 1.0
+      },
+      "val_metrics": {
+        "accuracy": 0.94025,
+        "precision": 0.9336124401913876,
+        "recall": 0.9242155121373594,
+        "f1": 0.9288902112466528,
+        "roc_auc": 0.986050702499104
+      }
+    },
+    {
+      "params": {
+        "C": 10.0
+      },
+      "val_metrics": {
+        "accuracy": 0.94025,
+        "precision": 0.9336124401913876,
+        "recall": 0.9242155121373594,
+        "f1": 0.9288902112466528,
+        "roc_auc": 0.9860450662122794
+      }
+    }
+  ],
+  "sizes": {
+    "train": 20000,
+    "validation": 4000,
+    "test": 4000
+  },
+  "seed": 42
+}

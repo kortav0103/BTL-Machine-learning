@@ -2,34 +2,22 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 import pandas as pd
-from PIL import Image
-from tqdm import tqdm
-
-from modules.vision.data.preprocessing import build_transform
-
 import torch
 import torch.nn as nn
-from torchvision import models
+from PIL import Image
 from torch.utils.data import DataLoader
+from torchvision import models
+from tqdm import tqdm
+
+from modules.vision.config import load_config
+from modules.vision.data.preprocessing import build_transform
 
 
-def _load_config(config: dict[str, Any] | str | Path) -> dict[str, Any]:
-    """Parse configuration from dict or JSON file path."""
-    if isinstance(config, (str, Path)):
-        config_path = Path(config)
-        if not config_path.is_file():
-            raise FileNotFoundError(f"Config file not found: {config_path}")
-        with open(config_path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    if isinstance(config, dict):
-        return dict(config)
-    raise TypeError(f"Expected config to be a dict or Path, got {type(config).__name__}")
 
 
 class CelebADataset:
@@ -115,7 +103,7 @@ def extract_features(manifest: pd.DataFrame, config: dict[str, Any] | str | Path
     if "image_path" not in manifest.columns:
         raise ValueError("Manifest must contain an 'image_path' column.")
 
-    cfg = _load_config(config)
+    cfg = load_config(config)
     model_name = cfg.get("extractor", "resnet50")
     batch_size = int(cfg.get("batch_size", 64))
     num_workers = int(cfg.get("num_workers", 2 if torch.cuda.is_available() else 0))

@@ -1,0 +1,10 @@
+partition,target,negative,positive
+0,Eyeglasses,18701,1299
+0,Male,11491,8509
+0,Smiling,10466,9534
+1,Eyeglasses,3730,270
+1,Male,2311,1689
+1,Smiling,2087,1913
+2,Eyeglasses,3751,249
+2,Male,2474,1526
+2,Smiling,2023,1977
